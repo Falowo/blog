@@ -25,12 +25,19 @@
           }
         }
       }
+      .active {
+        color: var(--primary);
+        font-weight: 700;
+        strong {
+          color: var(--primary);
+        }
+      }
     }
   }
   .articles-container {
     max-width: 80rem;
     flex: 1;
-    margin: 5rem 0 10rem 0;
+    margin: 0 0 10rem 0;
     .article {
       background: white;
       padding: 0 5rem;
