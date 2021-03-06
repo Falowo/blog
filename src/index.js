@@ -1,14 +1,13 @@
 import "./assets/styles/styles.scss";
 import "./index.scss";
-import { openModal } from "./assets/javascripts/modal.js";
+import { openModal } from "./assets/javascripts/modal";
 
 const articleContainerElement = document.querySelector(".articles-container");
 const categoriesContainerElement = document.querySelector(".categories");
+const selectElement = document.querySelector("select");
 let filter;
 let articles;
 let sortBy = "desc";
-
-const selectElement = document.querySelector("select");
 
 selectElement.addEventListener("change", () => {
   sortBy = selectElement.value;
@@ -59,14 +58,13 @@ const createArticles = () => {
     button.addEventListener("click", event => {
       const target = event.target;
       const articleId = target.dataset.id;
-      window.location.assign(`./form.html?id=${articleId}`);
+      location.assign(`/form.html?id=${articleId}`);
     });
   });
-
   deleteButtons.forEach(button => {
     button.addEventListener("click", async event => {
       const result = await openModal(
-        "Etes vous sûr de vouloir supprimer votre article ?"
+        "Etes vous sur de vouloir supprimer votre article ?"
       );
       if (result === true) {
         try {
@@ -78,7 +76,7 @@ const createArticles = () => {
               method: "DELETE"
             }
           );
-          await response.json();
+          const body = await response.json();
           fetchArticle();
         } catch (e) {
           console.log("e : ", e);
@@ -99,14 +97,15 @@ const displayMenuCategories = categoriesArr => {
       if (filter === categoryElem[0]) {
         filter = null;
         li.classList.remove("active");
+        createArticles();
       } else {
         filter = categoryElem[0];
         liElements.forEach(li => {
           li.classList.remove("active");
         });
         li.classList.add("active");
+        createArticles();
       }
-      createArticles();
     });
     return li;
   });
